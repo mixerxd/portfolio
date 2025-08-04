@@ -1,0 +1,491 @@
+:root {
+  --bg-dark: #0a0a0a;
+  --bg-darker: #121212;
+  --bg-darkest: #1a1a1a;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --terminal-green: #4af626;
+  --accent-purple: #bb86fc;
+  --accent-pink: #ff79c6;
+  
+  --spotify-green: #1DB954;
+  --github-green: #6cc644;
+  --github-blue: #58a6ff;
+  
+  --fade-speed: 0.4s;
+  --hover-speed: 0.25s;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, #root {
+  height: 100vh;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: 'Fira Code', 'Courier New', monospace;
+  line-height: 1.6;
+  overflow: hidden;
+}
+
+.app-container {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 30px;
+  padding: 30px;
+  height: 100vh;
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  scrollbar-width: none;
+  justify-content: center;
+}
+
+.left-panel::-webkit-scrollbar {
+  display: none;
+}
+
+.terminal {
+  background: rgba(30, 30, 30, 0.9);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  height: 65vh;
+  width: 90%;
+  margin: 0 auto;
+  overflow: hidden;
+  animation: fadeIn var(--fade-speed) ease-out forwards;
+  transition: transform var(--hover-speed) ease;
+}
+
+.terminal:hover {
+  transform: translateY(-8px);
+}
+
+.terminal-header {
+  background: linear-gradient(to right, #2d2d2d, #1f1f1f);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.terminal-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.terminal-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transition: transform var(--hover-speed) ease;
+}
+
+.terminal-button:hover {
+  transform: scale(1.15);
+}
+
+.terminal-button.close { background: #ff5f56; }
+.terminal-button.minimize { background: #ffbd2e; }
+.terminal-button.maximize { background: #27c93f; }
+
+.terminal-body {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background: rgba(20, 20, 20, 0.6);
+  scroll-behavior: smooth;
+}
+
+.widget-header {
+  background: linear-gradient(to right, #2d2d2d, #1f1f1f);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.widget-title {
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.widget-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.widget-button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.widget-button.close { background: #ff5f56; }
+.widget-button.minimize { background: #ffbd2e; }
+.widget-button.maximize { background: #27c93f; }
+
+.spotify-player {
+  background: rgba(30, 30, 30, 0.9);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  animation: fadeIn var(--fade-speed) ease-out forwards;
+  transition: transform var(--hover-speed) ease;
+  width: 100%;
+  height: 220px;
+}
+
+.spotify-player:hover {
+  transform: translateY(-8px);
+}
+
+.player-container {
+  padding: 16px;
+  height: calc(100% - 42px);
+  display: flex;
+  flex-direction: column;
+}
+
+.track-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 160px;
+  gap: 16px;
+  padding-left: 24px;
+}
+
+.album-art {
+  width: 110px;
+  height: 110px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.track-details {
+  text-align: left;
+  width: 100%;
+}
+
+.track-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: white;
+  font-size: 20px;
+}
+
+.artist-name {
+  color: var(--text-secondary);
+  font-size: 17px;
+}
+
+.album-name {
+  color: var(--text-secondary);
+  font-size: 16px;
+}
+
+.player-controls {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 12px 0;
+  margin-top: auto;
+}
+
+.control-button {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 22px;
+  cursor: pointer;
+  transition: all var(--hover-speed) ease;
+}
+
+.control-button:hover {
+  color: var(--spotify-green);
+  transform: scale(1.1);
+}
+
+.control-button.play-pause {
+  font-size: 32px;
+}
+
+.github-widget {
+  background: rgba(30, 30, 30, 0.9);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  animation: fadeIn var(--fade-speed) ease-out forwards;
+  transition: transform var(--hover-speed) ease;
+  width: 100%;
+  height: 300px;
+}
+
+.github-widget:hover {
+  transform: translateY(-8px);
+}
+
+.repo-list {
+  padding: 16px;
+  list-style: none;
+  height: calc(100% - 42px);
+  overflow-y: auto;
+}
+
+.repo-item {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.repo-item:last-child {
+  border-bottom: none;
+}
+
+.repo-link {
+  color: var(--github-blue);
+  text-decoration: none;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.repo-link:hover {
+  text-decoration: underline;
+}
+
+.repo-description {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.repo-stats {
+  display: flex;
+  gap: 16px;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.command-history {
+  margin-bottom: 20px;
+}
+
+.command-entry {
+  margin-bottom: 16px;
+  animation: fadeIn var(--fade-speed) ease-out;
+}
+
+.prompt {
+  color: var(--terminal-green);
+  margin-right: 8px;
+  text-shadow: 0 0 8px rgba(74, 246, 38, 0.4);
+}
+
+.command-output {
+  margin-left: 24px;
+  color: var(--text-primary);
+  line-height: 1.7;
+}
+
+.command-line {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.command-line::before {
+  content: '❯';
+  color: var(--terminal-green);
+  margin-right: 10px;
+  animation: pulse 1.5s infinite;
+}
+
+.command-input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  caret-color: var(--terminal-green);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 1024px) {
+  .app-container {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    height: auto;
+    min-height: 100vh;
+    align-items: flex-start;
+  }
+  
+  .terminal {
+    width: 100%;
+    height: 60vh;
+    margin-bottom: 30px;
+  }
+  
+  .left-panel {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  .spotify-player, .github-widget {
+    width: 100%;
+  }
+}
+
+.about-me {
+  padding: 1.5rem;
+}
+
+.bio-section, .skills-section {
+  margin-bottom: 2rem;
+}
+
+.skills-section h3 {
+  color: var(--accent-pink);
+  margin-bottom: 1rem;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+}
+
+.skill-category {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.skill-category h4 {
+  color: var(--terminal-green);
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.skill-category ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.skill-category li {
+  padding: 0.3rem 0;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.skill-category li::before {
+  content: '▹';
+  position: absolute;
+  left: 0;
+  color: var(--terminal-green);
+}
+
+.social-links .links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.social-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(5px);
+}
+
+.social-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.social-link span {
+  flex-grow: 1;
+}
+
+.social-handle {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.social-link:nth-child(1) .social-icon { color: var(--github-green); }
+.social-link:nth-child(2) .social-icon { color: #1DA1F2; } 
+.social-link:nth-child(3) .social-icon { color: #E1306C; } 
+.social-link:nth-child(4) .social-icon { color: #ff8000; } 
+
+.spotify-player, .github-widget {
+  margin: 0 auto;
+  width: 100%;
+}

@@ -1,0 +1,693 @@
+:root {
+  --bg-dark: #0a0a0a;
+  --bg-darker: #121212;
+  --bg-darkest: #1a1a1a;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --spotify-green: #1DB954;
+  --github-green: #6cc644;
+  --github-blue: #58a6ff;
+  --terminal-green: #4af626;
+  --accent-purple: #bb86fc;
+  --accent-pink: #ff79c6;
+}
+
+#root {
+  height: 100vh;
+  background-color: var(--bg-dark);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: 'Fira Code', 'Courier New', monospace;
+  line-height: 1.6;
+}
+
+.app-container {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 30px;
+  padding: 30px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1a2e 100%);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  position: sticky;
+  top: 30px;
+  height: fit-content;
+  width: 100%;
+}
+
+.terminal {
+  background-color: rgba(30, 30, 30, 0.8);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 600px;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  width: 90%;
+  max-width: 100%;
+  margin: 0;
+  margin-left: 70px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.terminal-header {
+  background: linear-gradient(to right, #2d2d2d, #1f1f1f);
+  padding: 0.8rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.terminal-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.terminal-button {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.terminal-button:hover {
+  transform: scale(1.1);
+}
+
+.terminal-button.close { 
+  background-color: #ff5f56;
+  box-shadow: 0 0 5px #ff5f56;
+}
+.terminal-button.minimize { 
+  background-color: #ffbd2e;
+  box-shadow: 0 0 5px #ffbd2e;
+}
+.terminal-button.maximize { 
+  background-color: #27c93f;
+  box-shadow: 0 0 5px #27c93f;
+}
+
+.terminal-title {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-shadow: 0 0 5px rgba(74, 246, 38, 0.3);
+}
+
+.terminal-body {
+  padding: 1.5rem;
+  height: 600px;
+  overflow-y: auto;
+  background-color: rgba(20, 20, 20, 0.6);
+}
+
+.command-history {
+  margin-bottom: 1.5rem;
+}
+
+.command-entry {
+  margin-bottom: 0.8rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.prompt {
+  color: var(--terminal-green);
+  margin-right: 0.5rem;
+  text-shadow: 0 0 8px rgba(74, 246, 38, 0.4);
+}
+
+.command-output {
+  margin-left: 1.8rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.command-line {
+  display: flex;
+  align-items: center;
+  margin-top: 1.5rem;
+  position: relative;
+}
+
+.command-line::before {
+  content: '❯';
+  color: var(--terminal-green);
+  margin-right: 0.8rem;
+  animation: pulse 1.5s infinite;
+}
+
+.command-input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  caret-color: var(--terminal-green);
+}
+
+.content {
+  margin-top: 1.5rem;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.content h2 {
+  color: var(--accent-purple);
+  margin-top: 0;
+  font-size: 1.4rem;
+  border-bottom: 1px solid rgba(187, 134, 252, 0.2);
+  padding-bottom: 0.5rem;
+}
+
+.social-links .links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.social-links a {
+  color: var(--text-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: all 0.2s;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.social-links a:hover {
+  color: var(--accent-pink);
+  background: rgba(255, 121, 198, 0.1);
+  transform: translateX(5px);
+}
+
+.spotify-player {
+  background: linear-gradient(145deg, #1a1a1a, #121212);
+  border-radius: 12px;
+  padding: 1.5rem;
+  color: var(--text-primary);
+  box-shadow: 
+    0 10px 20px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s;
+  width: 100%;
+}
+
+.spotify-player:hover {
+  transform: translateY(-3px);
+}
+
+.player-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.2rem;
+}
+
+.music-icon {
+  color: var(--spotify-green);
+  font-size: 1.8rem;
+  filter: drop-shadow(0 0 5px rgba(29, 185, 84, 0.5));
+}
+
+.player-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  letter-spacing: 0.5px;
+}
+
+.track-info {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.album-art {
+  width: 90px;
+  height: 90px;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s;
+  object-fit: cover;
+}
+
+.album-art:hover {
+  transform: scale(1.03);
+}
+
+.track-details {
+  flex: 1;
+}
+
+.track-title {
+  font-weight: 600;
+  margin: 0 0 6px 0;
+  font-size: 1.1rem;
+  color: white;
+}
+
+.artist-name, .album-name {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.player-controls {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.control-button {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.control-button:hover {
+  color: var(--spotify-green);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.control-button.play-pause {
+  background-color: var(--spotify-green);
+  color: white;
+  width: 50px;
+  height: 50px;
+}
+
+.control-button.play-pause:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(29, 185, 84, 0.5);
+}
+
+.github-widget {
+  background: linear-gradient(145deg, #1a1a1a, #121212);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 
+    0 10px 20px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s;
+  width: 100%;
+}
+
+.github-widget:hover {
+  transform: translateY(-3px);
+}
+
+.widget-header {
+  padding: 0.8rem 1rem;
+  background: var(--bg-darkest);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.github-icon {
+  color: var(--github-green);
+  font-size: 1.8rem;
+  filter: drop-shadow(0 0 5px rgba(108, 198, 68, 0.3));
+}
+
+.widget-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  letter-spacing: 0.5px;
+}
+
+.repo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.repo-item {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.2s;
+}
+
+.repo-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+  transform: translateX(5px);
+}
+
+.repo-link {
+  color: var(--github-blue);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.3rem;
+  transition: all 0.2s;
+}
+
+.repo-link:hover {
+  color: var(--accent-purple);
+  text-decoration: underline;
+}
+
+.repo-stats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+.repo-stats span {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 1024px) {
+  .app-container {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+  
+  .left-panel {
+    position: static;
+    margin-bottom: 30px;
+  }
+  
+  .terminal {
+    max-width: 100%;
+  }
+}
+
+.about-me {
+  padding: 1.5rem;
+}
+
+.bio-section, .skills-section {
+  margin-bottom: 2rem;
+}
+
+.skills-section h3 {
+  color: var(--accent-pink);
+  margin-bottom: 1rem;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+}
+
+.skill-category {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.skill-category h4 {
+  color: var(--terminal-green);
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.skill-category ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.skill-category li {
+  padding: 0.3rem 0;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.skill-category li::before {
+  content: '▹';
+  position: absolute;
+  left: 0;
+  color: var(--terminal-green);
+}
+
+.social-links .links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.social-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(5px);
+}
+
+.social-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.social-link span {
+  flex-grow: 1;
+}
+
+.social-handle {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.social-link:nth-child(1) .social-icon { color: var(--github-green); }
+.social-link:nth-child(2) .social-icon { color: #1DA1F2; }
+.social-link:nth-child(3) .social-icon { color: #E1306C; }
+.social-link:nth-child(4) .social-icon { color: #ff8000; }
+
+@media (max-width: 1024px) {
+  .app-container {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    max-width: 800px;
+  }
+  
+  .left-panel {
+    position: static;
+    margin-bottom: 30px;
+  }
+  
+  .terminal {
+    max-width: 100%;
+  }
+}
+
+body {
+  overflow: hidden;
+  height: 100vh;
+}
+
+.app-container {
+  height: 100vh;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.terminal {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.terminal-header {
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.terminal-body {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  background-color: rgba(20, 20, 20, 0.6);
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.command-history {
+  max-height: calc(100% - 100px);
+  overflow-y: auto;
+  margin-bottom: 1.5rem;
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  height: 100%;
+  overflow-y: auto;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.widget-header {
+  background: linear-gradient(to right, #2d2d2d, #1f1f1f);
+  padding: 0.8rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 12px 12px 0 0;
+}
+
+.widget-title {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-shadow: 0 0 5px rgba(74, 246, 38, 0.3);
+}
+
+.spotify-player {
+  background: linear-gradient(145deg, #1a1a1a, #121212);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 
+    0 10px 20px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.github-widget {
+  background: linear-gradient(145deg, #1a1a1a, #121212);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 
+    0 10px 20px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.widget-header {
+  background: linear-gradient(to right, #2d2d2d, #1f1f1f);
+  padding: 0.8rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-shadow: 0 0 5px rgba(74, 246, 38, 0.3);
+}
+
+.widget-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.widget-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.widget-button.close { background-color: #ff5f56; }
+.widget-button.minimize { background-color: #ffbd2e; }
+.widget-button.maximize { background-color: #27c93f; }
+
+.spotify-player, .github-widget {
+  background: rgba(30, 30, 30, 0.8);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 5px;
+  position: sticky;
+  top: 30px;
+}
+
+.left-panel::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+} 
