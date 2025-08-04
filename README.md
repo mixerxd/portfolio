@@ -17,7 +17,7 @@ A modern, interactive terminal-style portfolio website built with React and Node
 
 ## 🚀 Live Demo
 
-Visit the live portfolio: [Coming Soon]
+Visit the live portfolio: https://altgirl.wtf
 
 ## 🛠️ Tech Stack
 
